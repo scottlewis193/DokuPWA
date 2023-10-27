@@ -172,7 +172,7 @@ class GamePiece {
          
                     square.position = {}
                     square.size = {}
-                    square.position.x = mouseX+(tileSize*square.x)-((tileSize*(maxX+1))/2)
+                    square.position.x = mouseX+(tileSize*square.x)-((tileSize*(maxX+1))/2) //+ centerOffsetX
                     square.position.y = (touchsupported()) ?  mouseY+((tileSize*square.y)-(tileSize*(2+this.yMax))) : mouseY+((tileSize*square.y)-((this.yMax*tileSize)/2)) 
             
                     square.size.x = tileSize
@@ -185,14 +185,14 @@ class GamePiece {
          
                 square.position = {}
                 square.size = {}
-                square.position.x = (tileSize/2)*(+square.x)+this.posModX
+                square.position.x = (tileSize/2)*(+square.x)+this.posModX + centerOffsetX
                 square.position.y = (tileSize/2)*(+square.y+(StashY*2))-(tileSize/2)
                 square.size.x = tileSize/2
                 square.size.y = tileSize/2
                 }) 
         
         
-            this.position.x = this.posModX
+            this.position.x = this.posModX + centerOffsetX
             this.position.y = ((tileSize/2)*(StashY*2))-(tileSize/2)
             this.size.w = (tileSize/2)*5
             this.size.h = (tileSize/2)*5

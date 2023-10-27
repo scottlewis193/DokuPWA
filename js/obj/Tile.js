@@ -30,7 +30,7 @@ draw() {
     // c.fillText('x:' + Math.floor(this.position.x),this.position.x,this.position.y+15)
     // c.fillText('y:' + Math.floor(this.position.y),this.position.x,this.position.y +25)
     c.strokeStyle = 'black'
-    c.lineWidth = ratio
+    c.lineWidth = 1
     c.beginPath()
     c.moveTo(this.position.x+1,this.position.y+1)
     c.lineTo(this.position.x+1+this.size.w,this.position.y+1)

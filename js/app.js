@@ -33,6 +33,7 @@ const gridSize = 9
 const ratio = window.devicePixelRatio;
 const c = document.querySelector('#gameWindow').getContext("2d");
 
+
 let frmReqNo
 
 let tileSize
@@ -52,6 +53,8 @@ let bestScore = 0;
 let currentCombo = 1;
 let validClears = 0;
 let tl
+
+let centerOffsetX = (tileSize * (gridSize / 2)) - (ratio*4) 
 
 
 var gameLoopStop = 1;
@@ -82,7 +85,7 @@ const andref = document.referrer.includes('android-app://');
 
 if(isPwa()== true || andref == true) {console.log("PWA:true");} else 
 {console.log("PWA:false")
-if(window.location.href !== "http://127.0.0.1:5500/" && window.location.href !== "http://localhost:5500/" && window.location.href !== "http://192.168.1.10:5500/") {
+if(window.location.href !== "http://127.0.0.1:8080/" && window.location.href !== "http://localhost:8080/" && window.location.href !== "http://192.168.0.3:8080/") {
   document.querySelector("#installModal").style.display = "block"
  }
 }
@@ -217,14 +220,15 @@ tl = gsap.timeline()
 
 tiles.forEach(tile => {tile.update()})
 
+
 //draw missing line edges
 c.strokeStyle = 'black'
-c.lineWidth = ratio
+c.lineWidth = 1
 c.beginPath()
-c.moveTo(((gridSize) * tileSize)-ratio,0)
-c.lineTo(((gridSize) * tileSize)-ratio,((gridSize) * tileSize)-ratio)
-c.moveTo(((gridSize) * tileSize)-ratio,((gridSize) * tileSize))
-c.lineTo(0,((gridSize) * tileSize))
+c.moveTo(((gridSize) * tileSize) + centerOffsetX,0)
+c.lineTo(((gridSize) * tileSize) + centerOffsetX,((gridSize) * tileSize))
+c.moveTo(((gridSize) * tileSize) + centerOffsetX,((gridSize) * tileSize))
+c.lineTo(0 + centerOffsetX,((gridSize) * tileSize))
 c.stroke()
 
 stash.forEach(gamepiece => {gamepiece.update()})
@@ -407,10 +411,8 @@ let InterTiles = getIntersectingValidTiles(minSquare);
 
 //if no intersecting tiles
 if (InterTiles.length == 0) {clearTileHoverEffect();  return true;}
-
 //if off screen
-if (minSquare.position.x <= 0 - (tileSize/2) || minSquare.position.y <= 0 - (tileSize/2) || minSquare.position.x >= (tileSize * gridSize) - (tileSize/2) || minSquare.position.y >= (tileSize * gridSize) - (tileSize/2)) {clearTileHoverEffect();  return true;}
-
+if (minSquare.position.x <= 0 - (tileSize/2) + centerOffsetX || minSquare.position.y <= 0 - (tileSize/2) || minSquare.position.x >= (tileSize * gridSize) - (tileSize/2) + centerOffsetX  || minSquare.position.y >= (tileSize * gridSize) - (tileSize/2)) {clearTileHoverEffect();  return true;}
 let minTile = InterTiles.reduce((min, iTile) => min.position.x < iTile.position.x || min.position.y < iTile.position.y || iTile.inUse == false ? min : game)
 
 if ((minSquare.position.x / tileSize) >= ((minTile.position.x + (tileSize / 2)) / tileSize) && (minSquare.position.y / tileSize) >= ((minTile.position.y + (tileSize / 2)) / tileSize)) {shiftX = 1; shiftY = 1;}
@@ -490,23 +492,43 @@ detectClearTiles()
 
   function setSizing() {
 
-   
+    const CANVAS =  document.querySelector("#gameWindow")
+    const CONTEXT = document.querySelector("#gameWindow").getContext("2d")
+    const CONTAINER = document.querySelector("#gameContainer")
 
-    tileSize = (((window.innerWidth*0.92) / gridSize) * ratio < ((window.innerHeight*0.92) / (gridSize+6)) * ratio) ? ((window.innerWidth*0.92) / gridSize) * ratio : ((window.innerHeight*0.92) / (gridSize+6)) * ratio;
+    let size = (innerWidth < innerHeight) ? innerWidth : innerHeight
+
+    tileSize = (size/(gridSize+(ratio+6)));
+
+
+    let heightMod = tileSize * (ratio+6);
+
+    let gridSizePx = tileSize * (gridSize)
+
+   CANVAS.style.width = innerWidth + 'px';
+   CANVAS.style.height = gridSizePx + heightMod + 'px';
+
+   CANVAS.width = innerWidth * ratio;
+   CANVAS.height = (gridSizePx+heightMod) * ratio;
+
 
     
-    document.querySelector('#contentContainer').style.gridTemplateRows = '1fr 3vw min(12vw,12vh) ' + ((tileSize*(gridSize+4))/ratio) + 'px';
-    document.querySelector("#gameWindow").height = (tileSize*(gridSize+4));
-    document.querySelector("#gameWindow").width = (tileSize*gridSize);
-    document.querySelector("#gameWindow").style.zoom = 1 / ratio;
 
+    CONTEXT.scale(ratio,ratio)
+    //document.querySelector('#contentContainer').style.gridTemplateRows = '1fr 3vw min(12vw,12vh) ' + ((tileSize*(gridSize+4)) * ratio) + 'px';
+    // document.querySelector("#gameWindow").height = (tileSize*(gridSize+4)) * ratio;
+    // document.querySelector("#gameWindow").width = (tileSize*gridSize) * ratio;
+    // document.querySelector("#gameWindow").style.zoom = 1;
 
+    centerOffsetX = (innerWidth / 2) - (tileSize * (gridSize/2))
 
     //document.querySelector('#contentContainer').style.width = (tileSize*gridSize) + 'px';
 
   }
 
 function generateTiles() {
+  
+    
 
     tiles = [];
 
@@ -514,7 +536,7 @@ function generateTiles() {
   for(let x = 0; x < gridSize; x++) {
 
     for(let y = 0; y < gridSize; y++) {
-      let tile = new Tile({x:x*tileSize,y:y*tileSize},{x:x,y:y},{w:tileSize,h:tileSize})
+      let tile = new Tile({x:centerOffsetX+(x*(tileSize)),y:y*tileSize},{x:x,y:y},{w:tileSize,h:tileSize})
       tile.color = (isAltTileColour(tile)) ? tileColor : tileAltColor
       tiles.push(tile)
       

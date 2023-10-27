@@ -19,8 +19,8 @@
     const rect = document.querySelector('#gameWindow').getBoundingClientRect();
     var evt = (typeof e.originalEvent === 'undefined') ? e : e.originalEvent;
     var touch = evt.touches[0] || evt.changedTouches[0];
-    mouseX = (touch.clientX - (rect.left / ratio)) * ratio;
-    mouseY = (touch.clientY - (rect.top / ratio)) * ratio;
+    mouseX = (touch.clientX - (rect.left));
+    mouseY = (touch.clientY - (rect.top));
     stash.forEach(gamepiece => {if(mouseOnObj(mouseX,mouseY,gamepiece)==true) {if(gamepiece.mousePressed == false) {gamepiece.mousePressed = true; objPressed = gamepiece }}})
     
     gameLoopStop = 0
@@ -86,8 +86,8 @@
 
   function moveHandler(e) {
     const rect = document.querySelector('#gameWindow').getBoundingClientRect();
-    mouseX = (e.clientX - (rect.left / ratio)) * ratio;
-    mouseY = (e.clientY - (rect.top / ratio)) * ratio;
+    mouseX = (e.clientX - (rect.left));
+    mouseY = (e.clientY - (rect.top));
 
 
   }
