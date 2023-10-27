@@ -174,9 +174,9 @@ function load() {
 
 
   function startGameLoop(fps) {
-    fpsInterval = 1000 / fps;
-    then = Date.now();
-    startTime = then;
+    //fpsInterval = 1000 / fps;
+    //then = Date.now();
+    //startTime = then;
   
     gameLoop();
 }
@@ -198,16 +198,16 @@ function gameLoop() {
 
    // calc elapsed time since last loop
 
-   now = Date.now();
-   elapsed = now - then;
+   //now = Date.now();
+   //elapsed = now - then;
 
    // if enough time has elapsed, draw the next frame
 
-   if (elapsed > fpsInterval) {
+   //if (elapsed > fpsInterval) {
 
        // Get ready for next frame by setting then=now, but...
        // Also, adjust for fpsInterval not being multiple of 16.67
-       then = now - (elapsed % fpsInterval);
+       //then = now - (elapsed % fpsInterval);
     
 
 
@@ -243,7 +243,7 @@ if (objPressed !== null) {
 
 // c.fillStyle = 'white'
 // c.fillText(mouseX + ' ' + mouseY,10,10)
-}
+//}
 
 }
 
