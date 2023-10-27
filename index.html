@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="manifest" crossorigin="use-credentials" href="manifest.webmanifest" />
+    <meta name="theme-color" content="black" /> 
+    <title>Chazdoku</title>
+
+<!-- ios support -->
+<link rel="apple-touch-icon" href="images/icons/icon-72x72.png" />
+<link rel="apple-touch-icon" href="images/icons/icon-96x96.png" />
+<link rel="apple-touch-icon" href="images/icons/icon-128x128.png" />
+<link rel="apple-touch-icon" href="images/icons/icon-144x144.png" />
+<link rel="apple-touch-icon" href="images/icons/icon-152x152.png" />
+<link rel="apple-touch-icon" href="images/icons/icon-192x192.png" />
+<link rel="apple-touch-icon" href="images/icons/icon-384x384.png" />
+<link rel="apple-touch-icon" href="images/icons/icon-512x512.png" />
+<meta name="apple-mobile-web-app-status-bar" content="#db4938" />
+  </head>
+  <body>
+  
+  <div id="contentContainer">
+  <div id="emptySpaceTop"></div>
+   
+  <div class="uiHContainer" id="exitHeaderContainer" style="grid-column: 1; grid-row: 2; align-self: end;">
+    <a class="headerText" id="exitHeader"></a>
+  </div>
+
+  <button class="gameBtn" id="exitBtnContainer" onclick="openModal('mainMenuModal')" style="grid-column:1; grid-row:3;">
+    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+  </button>
+
+   <div class="uiHContainer" id="scoreHeaderContainer" style="grid-column: 2;grid-row: 2; align-self: end;">
+    <a class="headerText" id="scoreHeader">Current Score</a>
+  </div>
+    
+   <div class="uiContainer" id="scoreContainer" style="grid-column:2; grid-row:3;">
+    <h1 class="mainTxt" id='score'>0</h1>
+    </div>
+
+    <div class="uiHContainer" id="comboHeaderContainer" style="grid-column: 3;grid-row: 2;align-self: end;">
+      <a class="headerText" id="comboHeader">Combo</a>
+    </div>
+    
+    <div class="uiContainer" id="comboContainer" style="grid-column:3; grid-row:3;">
+      <h2 class="" id ='currentCombo'>1X</h3>
+    </div>
+
+    <div class="uiHContainer" id="bestscoreHeaderContainer" style="grid-column: 4;grid-row: 2;align-self: end;">
+      <a class="headerText" id="bestscoreHeader">Best Score</a>
+    </div>
+
+    <div class="uiContainer" id="bestscoreContainer" style="grid-column:4; grid-row:3;">
+      <h1 class="mainTxt" id='bestScore'>0</h1>
+    </div>
+
+    <div class="uiHContainer"  id="optionsHeaderContainer" style="grid-column: 5;grid-row: 2;align-self: end;">
+      <a class="headerText" id="optionsHeader"></a>
+    </div>
+
+    <button class="gameBtn" id="optionsBtnContainer" onclick="openModal('optionsModal')" style="grid-column:5; grid-row:3;">
+      <i class="fa-solid fa-gear"></i>
+    </button>
+
+    
+
+ 
+
+   <div id="gameContainer">
+
+     <canvas id="gameWindow">
+    </canvas>
+  </div>
+
+
+
+</div>
+
+</div>
+
+<div id="mainMenuModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-body">
+      <div class="mmLogo">DOKU</div>
+      <div style="grid-row:3" class="mmItem"><button class="menuBtn" id="quickStartBtn" onclick="checkProgress()">Quick Start</button></div>
+      <div style="grid-row:4" class="mmItem"><button class="menuBtn" id="multiplayerBtn" onclick="openModal('mpSelectionModal');closeModal('mainMenuModal')" >Multiplayer</button></div>
+      <div style="grid-row:5" class="mmItem"><button class="menuBtn" id="optionsBtn" onclick="openModal('optionsModal')">Options</button></div>
+      <div style="grid-row:6" class="mmItem"><button class="menuBtn" id="exitBtn" onclick="window.close()">Exit</button></div>
+      <div id="creditHeader" style="grid-row:8;">Credits</div>
+      <div style="grid-row:9; column-gap:20px; justify-self:center; text-align: center; font-size:min(2vw,2vh); display:grid; grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: auto auto;">
+        <a id="creditTextHeader" style="grid-column:1; grid-row:1">Code</a><a id="creditText" style="grid-column:1; grid-row:2">Scott Lewis</a>
+        <a id="creditTextHeader" style="grid-column:2; grid-row:1">Graphics</a><a id="creditText" style="grid-column:2; grid-row:2">Rachel Mee<br>Scott Lewis</a>
+        <a id="creditTextHeader" style="grid-column:3; grid-row:1">Testing</a><a id="creditText" style="grid-column:3; grid-row:2">Rachel Mee<br>Scott Lewis</a>
+        <a id="creditTextHeader" style="grid-column:4; grid-row:1">Champ</a><a id="creditText" style="grid-column:4; grid-row:2">Charlie Mee</a>
+      </div>
+      <a class="copyrightText" style="grid-row:10; ">Copyright © 2022 Pixelhead Games</a>
+      
+    </div>
+
+  </div>
+</div>
+
+<div id="optionsModal" class="modal">
+  <div class="modal-content">
+    <div class="close" onclick="closeModal('optionsModal')">X</div>
+    <div class="modal-body">
+      <div id="version" style="grid-column: 1 / span 2; grid-row: 1; justify-self: center; font-size: 0.9rem;">Version 0.1.12</div>
+      <div style="grid-column: 1; grid-row: 2; justify-self: center;">Sounds:</div>
+      <div style="grid-column: 2; grid-row: 2; justify-self: center;"><label class="switch"><input type="checkbox" id="soundsoption"><span class="slider"></span></label></div>
+      <div style="grid-column: 1; grid-row: 3; justify-self: center;">Dark Mode:</div>
+      <div style="grid-column: 2; grid-row: 3; justify-self: center;"><label class="switch"><input type="checkbox" id="darkmodeoption" onclick="toggleOption('darkmode')"><span class="slider"></span></label></div>
+      <div style="grid-column: 1; grid-row: 4; justify-self: center;">Tutorial:</div>
+      <div style="grid-column: 2; grid-row:4; justify-self: center;"><button class="optionBtn">Play</button></div>
+      <div style="grid-column: 1; grid-row: 5; justify-self: center;">App:</div>
+      <div style="grid-column: 2; grid-row:5; justify-self: center;"><button class="optionBtn">Reset</button></div>
+
+
+    </div>
+  </div>
+</div>
+
+<div id="updateModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-body">
+      <p id="updateTxt">Update Available!</p>
+      <button id="updateBtn">Update Now</button>
+    </div>
+  </div>
+</div>
+
+<div id="installModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-body">
+      <p id="installTxt" style="grid-column:2;grid-row:2;text-align: center;">This website works best as a PWA. <br>Click the button below to install</p>
+      <button id="installBtn" style="grid-column:2;grid-row:3">Install</button>
+    </div>
+  </div>
+</div>
+
+<div id="gameOverModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-body">
+      <p id="gameOverTxt" style="font-size: 1.5rem;">Game Over</p>
+      <p id="finalScoreTxt">Final Score: 0</p>
+      <button id="restartBtn" onclick="load();closeModal('gameOverModal');">Play Again</button>
+      <button id="exitToMenuBtn" onclick="openModal('mainMenuModal');closeModal('gameOverModal');">Exit To Menu</button>
+    </div>
+  </div>
+</div>
+
+<div id="gameInProgressModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-body">
+      <p id="gameinProgressTxt" style="font-size: 1.5rem;">Game In Progress</p>
+      <button id="resumeBtn" onclick="load();closeModal('gameInProgressModal');">Resume</button>
+      <button id="newGameBtn" onclick="clearProgress();load();closeModal('gameInProgressModal');">Start New Game</button>
+    </div>
+  </div>
+</div>
+
+<div id="mpSelectionModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-body">
+      <div class="mmLogo"></div>
+      <div class="mmItem"><button class="menuBtn" id="hostGameBtn" onclick="$('#mpSelectionModal').hide();$('#mpHostGameModal').show()"">Host Game</button></div>
+      <div class="mmItem"><button class="menuBtn" id="joinGameBtn" onclick="$('#mpSelectionModal').hide();$('#mpGameListModal').show()">Join Game</button></div>
+      <div class="mmItem"><button class="menuBtn" id="backtoMenuBtn" onclick="closeModal('mpSelectionModal');openModal('mainMenuModal')">Back</button></div>
+      
+    </div>
+
+  </div>
+</div>
+
+<div id="mpHostGameModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-body">
+      <div class="mmItem"></div>
+      <div class="mmItem">
+        <label class="textcontainer">Player Name:</label><br>
+          <input type="text" id="pname" name="pname"><br>
+
+      </div>
+      <div class="mmItem">
+        <label class="textcontainer">Server Name:</label><br>
+          <input type="text" id="sname" name="sname"><br>
+ 
+      </div>
+      <div class="mmItem">
+        <p>Game Type:</p>
+
+        
+        <label class="radiocontainer">
+          <input type="radio" name="radioMode" value="Battle" checked>
+          Battle</input>
+        </label>
+        
+        <label class="radiocontainer">
+          <input type="radio" name="radioMode" value="Team Battle">
+          Team Battle</input>
+        </label>
+        
+        <label class="radiocontainer">
+          <input type="radio" name="radioMode" value="Race">
+          Race</input>
+        </label>
+    
+      </div>
+
+      <div class="mmItem">
+        <p>Game Options:</p>
+        <label class="radiocontainer">
+          <input type="radio" checked name="radioGO" value="Original">
+          Original</input>
+        </label>
+        
+        <label class="radiocontainer">
+          <input type="radio" name="radioGO" value="Less Complex">
+          Less Complex</input>
+        </label>
+        
+        <label class="radiocontainer">
+          <input type="radio" name="radioGO" value="Custom">
+          Custom</input>
+        </label>
+      </div>
+
+
+      <div class="mmItem">
+        <button class="menuBtn" onclick="addServer();$('#mpHostGameModal').hide();$('#mpPreGameLobby').show()">Submit</button>
+      </div>
+
+      <div class="mmItem">
+        <button class="menuBtn" onclick="$('#mpHostGameModal').hide();$('#mpSelectionModal').show()">Back</button>
+      </div>
+   
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="mpPreGameLobby" class="modal">
+  <div class="modal-content">
+    <div class="modal-body">
+      <div class="mmItem"></div>
+      <div class="mmItem">
+        <label class="textcontainer">Players:</label><br>
+        <label class="textcontainer" id="lobbyplayerlist"></label><br>
+      </div>
+      <div class="mmItem">
+        <label class="textcontainer">Waiting For Host To Start...</label><br>
+      </div>
+
+      <div class="mmItem"><button class="menuBtn" id="StartBtn" onclick="">Start</button></div>
+      <div class="mmItem"><button class="menuBtn" id="backtoMenuBtn" onclick="playerServer.remove();closeModal('mpPreGameLobby');openModal('mainMenuModal')">Back</button></div>
+    </div>
+  </div>
+</div>
+
+<div id="mpGameListModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-body">
+      <div style="grid-column:1 / span 3;grid-row:1;"></div>
+      <div id="bgDiv" style="height:100%;grid-column:1 / span 3;grid-row:2;">
+        <table id="gameListTbl" style="width:100%;" >
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Host</th>
+              <th>Players</th>
+              <th>Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>testName</td>
+              <td>testHost</td>
+              <td>1/1</td>
+              <td>testOption1,testOption2,testOption3,testOption4,testOption5</td>
+            </tr>
+          </tbody>
+          </table>
+        </div>
+   
+      <button id="joinGameBtn" style="grid-column: 1; grid-row: 3">Join Game</button>
+      <button id="refreshListBtn" style="grid-column: 2; grid-row: 3">Refresh List</button>
+      <button id="backtoMenuBtn" style="grid-column: 3; grid-row: 3" onclick="$('#mpGameListModal').hide();openModal('mpSelectionModal')">Back</button>
+      
+    </div>
+
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script>
+    
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyAvSlGsl28MEo7ISvDHZ9tQEu6aE7TMz6c",
+        authDomain: "chazdoku.firebaseapp.com",
+        databaseURL: "https://chazdoku-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "chazdoku",
+        storageBucket: "chazdoku.appspot.com",
+        messagingSenderId: "1097464619955",
+        appId: "1:1097464619955:web:23dabb5a80275c6073e1c6"
+      };
+    
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js" integrity="sha512-VEBjfxWUOyzl0bAwh4gdLEaQyDYPvLrZql3pw1ifgb6fhEvZl9iDDehwHZ+dsMzA0Jfww8Xt7COSZuJ/slxc4Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/fontawesome.js"></script>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/load.js"></script>
+    <script src="js/obj/Tile.js"></script>
+    <script src="js/obj/GamePiece.js"></script>
+    <script src="js/events.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/app.js"></script>
+   
+  </body>
+
+
+
+</html>
