@@ -1,6 +1,6 @@
 {
-    "name": "Chazdoku",
-    "short_name": "Chazdoku",
+    "name": "Doku",
+    "short_name": "Doku",
     "display_override": ["window-controls-overlay"],
     "icons": [
       {
