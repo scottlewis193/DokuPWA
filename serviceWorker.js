@@ -1,4 +1,4 @@
- const cacheName = "Version 0.5.1";
+ const cacheName = "Version 0.5.6";
 
 
 
@@ -32,6 +32,8 @@ const appShellFiles = [
   "/js/obj/GamePiece.js",
   "/js/events.js",
   "/js/utils.js",
+  "/js/board.js",
+  "/js/stash.js",
   "/js/jquery-3.6.0.min.js",
   "/js/fontawesome.js",
   "/icons/icon-72x72.png",

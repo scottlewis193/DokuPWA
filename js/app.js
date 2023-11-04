@@ -37,8 +37,6 @@ const c = document.querySelector('#gameWindow').getContext("2d");
 let frmReqNo
 
 let tileSize
-let tiles = [];
-let stash = [];
 let currentHoveringTiles = [];
 
 let mouseX = null;
@@ -144,16 +142,16 @@ function load() {
   //reset score 
   setScore(0)
 
-  //reset stash
-  stash = [];
+  // //reset stash
+  // stash = [];
 
   //reset tiles
-  tiles = [];
+  board.tiles = [];
 
   //set app sizing
   setSizing();
   //gen tiles
-  generateTiles();
+  board.generateTiles();
   //cap to 60FPS
   startGameLoop(60);
   //get best score
@@ -163,12 +161,12 @@ function load() {
     localStorage.setItem("progressTiles","")
     localStorage.setItem("progressStash","")
     localStorage.setItem("progressStats","")
-    fillStash()
+    stash.fill()
   }
 
   if (localStorage.getItem("progressTiles") !== "") {
     loadProgress();
-  } else {fillStash()}
+  } else {stash.fill()}
 
   }
 
@@ -215,10 +213,10 @@ c.clearRect(0,0,document.querySelector('#gameWindow').width,document.querySelect
 
 if (newHoverX !== curHoverX || newHoverY !== curHoverY) {
 tl = gsap.timeline()
-  tiles.forEach(tile => {tile.colorAlpha = 0; if(tile.isHovering){tl.to(tile,{colorAlpha:1, duration:2, overwrite:true},"tile")}})
+  board.tiles.forEach(tile => {tile.colorAlpha = 0; if(tile.isHovering){tl.to(tile,{colorAlpha:1, duration:2, overwrite:true},"tile")}})
 }
 
-tiles.forEach(tile => {tile.update()})
+board.tiles.forEach(tile => {tile.update()})
 
 
 //draw missing line edges
@@ -231,9 +229,7 @@ c.moveTo(((gridSize) * tileSize) + centerOffsetX,((gridSize) * tileSize))
 c.lineTo(0 + centerOffsetX,((gridSize) * tileSize))
 c.stroke()
 
-stash.forEach(gamepiece => {gamepiece.update()})
-
-
+stash.updateAll()
 
 
 
@@ -250,153 +246,19 @@ if (objPressed !== null) {
 
 
 
-  function checkPiecesForAvailablePlacements() {
-
-    // //Get inuse tiles
-    // let iTiles = [];
-    // tiles.forEach(tile => {if(tile.inUse == true){iTiles.push(tile)}})
-
-    stash.forEach(piece => {
-      piece.canBePlaced = false
-      for (let y = 0; y < gridSize; y++) {
-
-        for (let x = 0; x < gridSize; x++) {
-
-          let validSquares = 0
-          piece.squares.forEach(square => {
-            
-            let testTile = tiles[tiles.findIndex(el => {return el.gridPosition.x == square.x + x && el.gridPosition.y == square.y + y })]
-            
-            if (testTile !== undefined) {
-            if (testTile.inUse == false) {
-              validSquares += 1 
-            }
-          }
-
-            })
-
-          
-          if (validSquares == piece.squares.length) {piece.canBePlaced = true; break;}
-
-        }
-        if (piece.canBePlaced == true) {break;}
-      }
-
-    })
-  }
-
-function detectClearTiles() {
-    
-
-    let rows = [];
-    for (let x = 0; x < gridSize; x++) {rows.push({id: x,valid: false})}
-    let cols = [];
-    for (let y = 0; y < gridSize; y++) {cols.push({id: y,valid: false})}
-    let boxes = [];
-    for (let i = 0; i < Math.pow(gridSize/3,2); i++) {boxes.push({id: i,valid:false})}
-
-
-
-
-//get all inuse and hovering tiles
-let iTiles = [];
-tiles.forEach(tile => {if(tile.inUse == true || tile.isHovering == true){iTiles.push(tile)}})
-    
-    //cols
-    for (let x = 0; x < gridSize; x++)  
-      for(let y = 0; y < gridSize; y++){
-      let testTile = iTiles[iTiles.findIndex(el => {return el.gridPosition.x == x && el.gridPosition.y == y})]
-        if (testTile == undefined) {
-          cols[x].valid = false
-          break
-          } else {
-          cols[x].valid = true
-        }
-    }
-  
   
 
-    //rows
-    for (let y = 0; y < gridSize; y++)    
-    for(let x = 0; x < gridSize; x++){
-        let testTile = iTiles[iTiles.findIndex(el => {return el.gridPosition.x == x && el.gridPosition.y == y })]
-        if (testTile == undefined) {
-          rows[y].valid = false
-          break
-          } else {
-          rows[y].valid = true
-        }
-    }
 
-    //boxes
-    for (let i = 0; i < boxes.length; i++)
-    {
-
-   
-
-    for (let y = 0; y < 3; y++)     
-   { for(let x = 0; x < 3; x++){
-
-    let posX = ((i-(3*Math.floor(i/3)))*3)+x
-    let posY = (Math.floor(i/3)*3)+y
-        
-    let testTile = iTiles[iTiles.findIndex(el => {return el.gridPosition.x == posX && el.gridPosition.y == posY })]
-    if (testTile == undefined) {
-      boxes[i].valid = false
-      break
-      } else {
-      boxes[i].valid = true
-    }
-    }
-    if (boxes[i].valid==false){break}
-    }
-
-    validClears = 0
-
-    //highlight valid rows/cols/boxes
-    rows.forEach(row => {if(row.valid==true){validClears+=1; for(let x = 0; x < gridSize; x++){iTiles[iTiles.findIndex(el => {return el.gridPosition.x == x && el.gridPosition.y == row.id})].isHighlighting = true; }}})
-    cols.forEach(col => {if(col.valid==true){validClears+=1; for(let y = 0; y < gridSize; y++){iTiles[iTiles.findIndex(el => {return el.gridPosition.x == col.id && el.gridPosition.y == y})].isHighlighting = true; }}})
-    boxes.forEach(box => {if(box.valid==true){
-      validClears+=1
-
-      for (let y = 0; y < 3; y++)     
-      { for(let x = 0; x < 3; x++){ 
-
-        let posX = ((box.id-(3*Math.floor(box.id/3)))*3)+x
-        let posY = (Math.floor(box.id/3)*3)+y
-
-        iTiles[iTiles.findIndex(el => {return el.gridPosition.x == posX && el.gridPosition.y == posY})].isHighlighting = true
-
-      }
-
-
-    }
-
-
-    }})
-
-
-
- 
-    //highlight squares on piece
-let currentPiece
-stash.some(piece => {if(piece.mousePressed == true){currentPiece = piece; return true}})
-for (let i = 0; i < currentHoveringTiles.length; i++) {
-  if (currentHoveringTiles[i].isHighlighting==true) {currentPiece.squares[i].isHighlighting = true}
-}
-
-  }
-}
 
   function detectValidPlacement() {
 
     curHoverX = newHoverX
     curHoverY = newHoverY
 
-    resetHighlightingPieceSquares();
+    stash.resetHighlightingPieceSquares();
 
   //valid placement detection
-  clearTileHoverEffect();
+  board.clearTileHoverEffect();
 
     let shiftX = 0
     let shiftY = 0
@@ -407,12 +269,12 @@ for (let i = 0; i < currentHoveringTiles.length; i++) {
 
 let minSquare = objPressed.squares.reduce((min, square) => min.position.x < square.position.x || min.position.y < square.position.y ? min : game)
 
-let InterTiles = getIntersectingValidTiles(minSquare);
+let InterTiles = board.getIntersectingValidTiles(minSquare);
 
 //if no intersecting tiles
-if (InterTiles.length == 0) {clearTileHoverEffect();  return true;}
+if (InterTiles.length == 0) {board.clearTileHoverEffect();  return true;}
 //if off screen
-if (minSquare.position.x <= 0 - (tileSize/2) + centerOffsetX || minSquare.position.y <= 0 - (tileSize/2) || minSquare.position.x >= (tileSize * gridSize) - (tileSize/2) + centerOffsetX  || minSquare.position.y >= (tileSize * gridSize) - (tileSize/2)) {clearTileHoverEffect();  return true;}
+if (minSquare.position.x <= 0 - (tileSize/2) + centerOffsetX || minSquare.position.y <= 0 - (tileSize/2) || minSquare.position.x >= (tileSize * gridSize) - (tileSize/2) + centerOffsetX  || minSquare.position.y >= (tileSize * gridSize) - (tileSize/2)) {board.clearTileHoverEffect();  return true;}
 let minTile = InterTiles.reduce((min, iTile) => min.position.x < iTile.position.x || min.position.y < iTile.position.y || iTile.inUse == false ? min : game)
 
 if ((minSquare.position.x / tileSize) >= ((minTile.position.x + (tileSize / 2)) / tileSize) && (minSquare.position.y / tileSize) >= ((minTile.position.y + (tileSize / 2)) / tileSize)) {shiftX = 1; shiftY = 1;}
@@ -438,56 +300,35 @@ newHoverY = minTile.gridPosition.y
 
 objPressed.squares.some(square => {if(square !== minSquare){
 
-let nTile = tiles.find(tile => {return tile.gridPosition.x == minTile.gridPosition.x + (square.x - minSquare.x) && tile.gridPosition.y == minTile.gridPosition.y + (square.y - minSquare.y)})
+let nTile = board.tiles.find(tile => {return tile.gridPosition.x == minTile.gridPosition.x + (square.x - minSquare.x) && tile.gridPosition.y == minTile.gridPosition.y + (square.y - minSquare.y)})
 
 if (nTile == null) {return true}
 
-if (nTile.inUse == true) {clearTileHoverEffect(); invalid = true; return true;} else {nTile.isHovering = true; currentHoveringTiles.push(nTile)}
+if (nTile.inUse == true) {board.clearTileHoverEffect(); invalid = true; return true;} else {nTile.isHovering = true; currentHoveringTiles.push(nTile)}
 
 }})
 
-if (invalid == true) {clearTileHoverEffect(); return}
+if (invalid == true) {board.clearTileHoverEffect(); return}
 
 
 
-let hoveringTiles = getCurrentHoveringTiles()
+let hoveringTiles = board.getCurrentHoveringTiles()
 
-if (hoveringTiles.length !== objPressed.squares.length) {clearTileHoverEffect(); return true;}
+if (hoveringTiles.length !== objPressed.squares.length) {board.clearTileHoverEffect(); return true;}
 
-detectClearTiles()
+board.detectClearTiles()
 
  
 
   }
 
   
-  function resetHighlightingPieceSquares() {
-  //reset highlighted squares
-    stash.forEach(piece => {piece.squares.forEach(square => {square.isHighlighting = false})})
-  }
 
-  function clearTileHoverEffect(){
-    tiles.forEach(tile => {tile.isHovering = false;
-                          tile.isHighlighting = false;
-                          currentHoveringTiles = [];})
-    
-  }
 
-  function getIntersectingValidTiles(sqr) {
 
-    let intersectingTiles = [];
 
-    tiles.some(tile => {if(objWithinObj(sqr,tile)) {intersectingTiles.push(tile)} })
 
-    return intersectingTiles
 
-  }
-
-  function getCurrentHoveringTiles() {
-    let hoveringTiles = [];
-    tiles.forEach(tile => {if(tile.isHovering == true){hoveringTiles.push(tile)}})
-    return hoveringTiles
-  }
 
 
   function setSizing() {
@@ -498,17 +339,22 @@ detectClearTiles()
 
     let size = (innerWidth < innerHeight) ? innerWidth : innerHeight
 
-    tileSize = (size/(gridSize+(ratio+6)));
+    let screenRatio = Math.ceil(innerHeight/innerWidth) 
+    let tileSizeMod = (screenRatio > 2) ? 1 : screenRatio+7
+
+    tileSize = (size/(gridSize+(tileSizeMod)));
 
 
-    let heightMod = tileSize * (ratio+6);
+    let heightMod = tileSize * 4;
 
     let gridSizePx = tileSize * (gridSize)
 
    CANVAS.style.width = innerWidth + 'px';
+   console.log(innerWidth)
    CANVAS.style.height = gridSizePx + heightMod + 'px';
 
    CANVAS.width = innerWidth * ratio;
+   console.log(innerWidth * ratio)
    CANVAS.height = (gridSizePx+heightMod) * ratio;
 
 
@@ -520,66 +366,20 @@ detectClearTiles()
     // document.querySelector("#gameWindow").width = (tileSize*gridSize) * ratio;
     // document.querySelector("#gameWindow").style.zoom = 1;
 
+    //centerOffsetX = 0
     centerOffsetX = (innerWidth / 2) - (tileSize * (gridSize/2))
 
     //document.querySelector('#contentContainer').style.width = (tileSize*gridSize) + 'px';
 
   }
 
-function generateTiles() {
-  
-    
-
-    tiles = [];
-
-  //generate tiles
-  for(let x = 0; x < gridSize; x++) {
-
-    for(let y = 0; y < gridSize; y++) {
-      let tile = new Tile({x:centerOffsetX+(x*(tileSize)),y:y*tileSize},{x:x,y:y},{w:tileSize,h:tileSize})
-      tile.color = (isAltTileColour(tile)) ? tileColor : tileAltColor
-      tiles.push(tile)
-      
-    }
-
-  }
-}
-
-function fillStash() {
-
-
-stash = []
 
 
 
-for(let i = 0; i < 3; i++) {
-let p
-let duplicate = false
-do {
-
-duplicate = false
-
-p = new GamePiece(Math.floor(Math.random()*Pieces.length),i)
-
-  if (p.type == "BL_DR") {}
-
-  //check stash for duplicates
-  stash.some(piece => {if(p.type == piece.type) {duplicate = true; return true;}})
-
-}
-while (duplicate == true)
-
-stash.push(p)
-
-
-}
+stash.checkForAvailablePlacements();
 
 
 
-checkPiecesForAvailablePlacements();
-
-
-}
 
 function getBestScoreCookie() {
     let score
@@ -672,31 +472,29 @@ for (let i = 0; i < amount; i++) {
 
 function saveProgress() {
 
-    tiles.forEach(tile => {delete tile._gsap;})
+    board.tiles.forEach(tile => {delete tile._gsap;})
 
-localStorage.setItem("progressTiles",JSON.stringify(tiles))
-localStorage.setItem("progressStash", JSON.stringify(stash))
+localStorage.setItem("progressTiles",JSON.stringify(board.tiles))
+localStorage.setItem("progressStash", JSON.stringify(stash.GamePieces))
 localStorage.setItem("progressStats", JSON.stringify({score: currentScore, combo: currentCombo}))
 
   }
 
   function loadProgress() {
 
-    tiles = [];
-    stash = [];
 
     tilesNew = JSON.parse(localStorage.getItem("progressTiles"))
     stashNew = JSON.parse(localStorage.getItem("progressStash"))
     statsNew = JSON.parse(localStorage.getItem("progressStats"))
 
-    generateTiles()
+    board.generateTiles()
 
 //iterate through tiles and apply values to properties from saveState minus colour properties
 let i = 0
-tiles.forEach(tile => {
+board.tiles.forEach(tile => {
   for (const prop in tile) {
     if(prop.toLocaleLowerCase().indexOf('color') < 0) {
-      tiles[i][prop] = tilesNew[i][prop]
+      board.tiles[i][prop] = tilesNew[i][prop]
     }
   }
 i++
@@ -706,19 +504,19 @@ i++
 
 //iterate through stash and apply values to properties from saveState minus colour properties
 
-fillStash()
+stash.fill()
 
 if (stashNew.length == 2) {stash.pop();} else if (stashNew.length == 1) {stash.pop();stash.pop();}
 
-i = 0
-stash.forEach(piece => {
-  stashNew[i].no = i
-  for (const prop in piece) {
-    if(prop.toLocaleLowerCase().indexOf('color') < 0) {
-      stash[i][prop] = stashNew[i][prop]
+  i = 0
+  stash.forEach(piece => {
+    stashNew[i].no = i
+    for (const prop in piece) {
+      if(prop.toLocaleLowerCase().indexOf('color') < 0) {
+        stash[i][prop] = stashNew[i][prop]
+      }
     }
-  }
-i++ 
+  i++ 
 })
 
 
@@ -733,32 +531,3 @@ document.querySelector("#currentCombo").innerHTML = currentCombo + 'X';
 
 }
 
-
-//FIREBASE
-
-function addServer() {
-  playerServerId = Date.now()
-  playerServer = firebase.database().ref(`servers/${playerId}`);
-
-        playerServer.set({
-          id: playerId,
-          name: document.querySelector('input[name=sname]').value,
-          gamemode: document.querySelector('input[name=radioMode]:checked').value,
-          playerIds: [playerId],
-          gameOptions: document.querySelector('input[name=radioGO]:checked').value
-
-        })
-
-        //set players server
-        players[playerId].server = playerId
-        playerRef.set(players[playerId])
-
-
-        //removes server on disconnect
-        playerServer.onDisconnect().remove();
-}
-
-
-
-
-  
