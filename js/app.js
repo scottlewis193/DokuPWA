@@ -358,9 +358,9 @@ for (let i = 0; i < amount; i++) {
   }
 
   function checkProgress() {
-    if(localStorage.getItem("progressTiles") === null || localStorage.getItem("progressTiles") == "") {load()} else {
+    //if(localStorage.getItem("progressTiles") === null || localStorage.getItem("progressTiles") == "") {load()} else {
       openModal("gameInProgressModal")
-    }
+    //
   }
 
   function clearProgress() {
