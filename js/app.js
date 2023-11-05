@@ -7,7 +7,6 @@ channel4Broadcast.onmessage = (event) => {
   localStorage.setItem('version',value)
 }
 
-//getVersionCookie()
 
 //css color variables
 let tileColor = getComputedStyle(document.body).getPropertyValue('--tileColor');
@@ -27,8 +26,6 @@ let darkmode = localStorage.getItem("darkmode")
 getVersion()
 getOptions()
 
-
-
 const gridSize = 9
 const ratio = window.devicePixelRatio;
 const c = document.querySelector('#gameWindow').getContext("2d");
@@ -37,14 +34,11 @@ const c = document.querySelector('#gameWindow').getContext("2d");
 let frmReqNo
 
 let tileSize
-let currentHoveringTiles = [];
+
 
 let mouseX = null;
 let mouseY = null;
-let curHoverX = 0;
-let curHoverY = 0;
-let newHoverX = 0;
-let newHoverY = 0;
+
 let objPressed = null;
 let currentScore = 0;
 let bestScore = 0;
@@ -60,6 +54,8 @@ var frameCount = 0;
 var fps, fpsInterval, startTime, now, then, elapsed;
 
 let deferredPrompt;
+
+//===============================================
 
 window.addEventListener('beforeinstallprompt', (e) => {
     deferredPrompt = e;
@@ -130,20 +126,16 @@ document.querySelector('#gameWindow').addEventListener('mousemove',function(e) {
       }
   });
 
-
+//=================================
 
 
   
 function load() {
   //make menu invisible
-  document.querySelector("#mainMenuModal").style.display = 'none'
-
+  closeModal('mainMenuModal')
 
   //reset score 
   setScore(0)
-
-  // //reset stash
-  // stash = [];
 
   //reset tiles
   board.tiles = [];
@@ -208,126 +200,41 @@ function gameLoop() {
        //then = now - (elapsed % fpsInterval);
     
 
+  //clear canvas
+  c.clearRect(0,0,document.querySelector('#gameWindow').width,document.querySelector('#gameWindow').height)
 
-c.clearRect(0,0,document.querySelector('#gameWindow').width,document.querySelector('#gameWindow').height)
-
-if (newHoverX !== curHoverX || newHoverY !== curHoverY) {
-tl = gsap.timeline()
-  board.tiles.forEach(tile => {tile.colorAlpha = 0; if(tile.isHovering){tl.to(tile,{colorAlpha:1, duration:2, overwrite:true},"tile")}})
-}
-
-board.tiles.forEach(tile => {tile.update()})
-
-
-//draw missing line edges
-c.strokeStyle = 'black'
-c.lineWidth = 1
-c.beginPath()
-c.moveTo(((gridSize) * tileSize) + centerOffsetX,0)
-c.lineTo(((gridSize) * tileSize) + centerOffsetX,((gridSize) * tileSize))
-c.moveTo(((gridSize) * tileSize) + centerOffsetX,((gridSize) * tileSize))
-c.lineTo(0 + centerOffsetX,((gridSize) * tileSize))
-c.stroke()
-
-stash.updateAll()
-
-
-
-if (objPressed !== null) {
-  detectValidPlacement()
-}
-
-// c.fillStyle = 'white'
-// c.fillText(mouseX + ' ' + mouseY,10,10)
-//}
-
-}
-
-
-
-
-  
-
-
-
-  function detectValidPlacement() {
-
-    curHoverX = newHoverX
-    curHoverY = newHoverY
-
-    stash.resetHighlightingPieceSquares();
-
-  //valid placement detection
-  board.clearTileHoverEffect();
-
-    let shiftX = 0
-    let shiftY = 0
-
-    let invalid = false
-
-
-
-let minSquare = objPressed.squares.reduce((min, square) => min.position.x < square.position.x || min.position.y < square.position.y ? min : game)
-
-let InterTiles = board.getIntersectingValidTiles(minSquare);
-
-//if no intersecting tiles
-if (InterTiles.length == 0) {board.clearTileHoverEffect();  return true;}
-//if off screen
-if (minSquare.position.x <= 0 - (tileSize/2) + centerOffsetX || minSquare.position.y <= 0 - (tileSize/2) || minSquare.position.x >= (tileSize * gridSize) - (tileSize/2) + centerOffsetX  || minSquare.position.y >= (tileSize * gridSize) - (tileSize/2)) {board.clearTileHoverEffect();  return true;}
-let minTile = InterTiles.reduce((min, iTile) => min.position.x < iTile.position.x || min.position.y < iTile.position.y || iTile.inUse == false ? min : game)
-
-if ((minSquare.position.x / tileSize) >= ((minTile.position.x + (tileSize / 2)) / tileSize) && (minSquare.position.y / tileSize) >= ((minTile.position.y + (tileSize / 2)) / tileSize)) {shiftX = 1; shiftY = 1;}
-if ((minSquare.position.x / tileSize) >= ((minTile.position.x + (tileSize / 2)) / tileSize)) {shiftX = 1}
-if ((minSquare.position.y / tileSize) >= ((minTile.position.y + (tileSize / 2)) / tileSize)) {shiftY = 1}
-
-minTile = InterTiles.find(iTile => {return iTile.gridPosition.x == minTile.gridPosition.x + shiftX && iTile.gridPosition.y == minTile.gridPosition.y + shiftY})
-
-if (minTile == null) {return}
-
-if (minTile.inUse == true) {return}
-
-minTile.isHovering = true
-currentHoveringTiles.push(minTile)
-
-
-newHoverX = minTile.gridPosition.x
-newHoverY = minTile.gridPosition.y
-// tile.colorAlpha = 0
-// tile.hColor = 'rgba(255,255,255,' + tile.colorAlpha + ')'
-
-//map rest of squares
-
-objPressed.squares.some(square => {if(square !== minSquare){
-
-let nTile = board.tiles.find(tile => {return tile.gridPosition.x == minTile.gridPosition.x + (square.x - minSquare.x) && tile.gridPosition.y == minTile.gridPosition.y + (square.y - minSquare.y)})
-
-if (nTile == null) {return true}
-
-if (nTile.inUse == true) {board.clearTileHoverEffect(); invalid = true; return true;} else {nTile.isHovering = true; currentHoveringTiles.push(nTile)}
-
-}})
-
-if (invalid == true) {board.clearTileHoverEffect(); return}
-
-
-
-let hoveringTiles = board.getCurrentHoveringTiles()
-
-if (hoveringTiles.length !== objPressed.squares.length) {board.clearTileHoverEffect(); return true;}
-
-board.detectClearTiles()
-
- 
-
+  //start tile hover animation
+  if (board.newHoverX !== board.curHoverX || board.newHoverY !== board.curHoverY) {
+  tl = gsap.timeline()
+    board.tiles.forEach(tile => {tile.colorAlpha = 0; if(tile.isHovering){tl.to(tile,{colorAlpha:1, duration:2, overwrite:true},"tile")}})
   }
 
-  
+  //update tiles
+  board.updateTiles()
+
+
+  //draw missing line edges
+  c.strokeStyle = 'black'
+  c.lineWidth = 1
+  c.beginPath()
+  c.moveTo(((gridSize) * tileSize) + centerOffsetX,0)
+  c.lineTo(((gridSize) * tileSize) + centerOffsetX,((gridSize) * tileSize))
+  c.moveTo(((gridSize) * tileSize) + centerOffsetX,((gridSize) * tileSize))
+  c.lineTo(0 + centerOffsetX,((gridSize) * tileSize))
+  c.stroke()
+
+  //update gamepieces in stash
+  stash.updateAll()
 
 
 
+  //update various parts of board if current piece has valid placement
+  if (objPressed !== null) {
+    board.detectValidPlacement()
+  }
 
 
+}
 
 
 
@@ -373,14 +280,6 @@ board.detectClearTiles()
 
   }
 
-
-
-
-stash.checkForAvailablePlacements();
-
-
-
-
 function getBestScoreCookie() {
     let score
 if (localStorage.getItem('bestScore') == null) {
@@ -394,7 +293,7 @@ if (localStorage.getItem('bestScore') == null) {
         //setCookie("bestScore", 0, 365);
         localStorage.setItem('bestScore',0)
     }
-  }
+}
 
   function getVersionCookie() {
     let version = getCookie("version");
@@ -483,41 +382,42 @@ localStorage.setItem("progressStats", JSON.stringify({score: currentScore, combo
   function loadProgress() {
 
 
+    //get load data
     tilesNew = JSON.parse(localStorage.getItem("progressTiles"))
     stashNew = JSON.parse(localStorage.getItem("progressStash"))
     statsNew = JSON.parse(localStorage.getItem("progressStats"))
 
+    //generate tiles
     board.generateTiles()
 
-//iterate through tiles and apply values to properties from saveState minus colour properties
-let i = 0
-board.tiles.forEach(tile => {
-  for (const prop in tile) {
-    if(prop.toLocaleLowerCase().indexOf('color') < 0) {
-      board.tiles[i][prop] = tilesNew[i][prop]
-    }
-  }
-i++
-})
-
-
-
-//iterate through stash and apply values to properties from saveState minus colour properties
-
-stash.fill()
-
-if (stashNew.length == 2) {stash.pop();} else if (stashNew.length == 1) {stash.pop();stash.pop();}
-
-  i = 0
-  stash.forEach(piece => {
-    stashNew[i].no = i
-    for (const prop in piece) {
-      if(prop.toLocaleLowerCase().indexOf('color') < 0) {
-        stash[i][prop] = stashNew[i][prop]
+    //iterate through tiles and apply values to properties from saveState minus colour properties
+    let i = 0
+    board.tiles.forEach(tile => {
+      for (const prop in tile) {
+        if(prop.toLocaleLowerCase().indexOf('color') < 0) {
+          board.tiles[i][prop] = tilesNew[i][prop]
+        }
       }
-    }
-  i++ 
-})
+    i++
+    })
+
+    //iterate through stash and apply values to properties from saveState minus colour properties
+    stash.fill()
+
+    //remove elements so new stash (loaded stash) equals stash
+    if (stashNew.length == 2) {stash.GamePieces.pop();} else if (stashNew.length == 1) {stash.GamePieces.pop();stash.GamePieces.pop();}
+
+
+    i = 0
+    stash.GamePieces.forEach(piece => {
+      stashNew[i].no = i
+        for (const prop in piece) {
+          if(prop.toLocaleLowerCase().indexOf('color') < 0) {
+          stash.GamePieces[i][prop] = stashNew[i][prop]
+          }
+        }
+      i++ 
+    })
 
 
 

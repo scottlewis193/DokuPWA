@@ -1,5 +1,10 @@
 var board = {
- tiles : [],
+tiles : [],
+curHoverX : 0,
+curHoverY : 0,
+newHoverX : 0, 
+newHoverY : 0,
+currentHoveringTiles: [],
 
 generateTiles() {
   
@@ -140,6 +145,88 @@ getIntersectingValidTiles(sqr) {
 
     return intersectingTiles
 
-  }
+},
+
+updateTiles() {
+  
+  this.tiles.forEach(tile => {tile.update()})
+
+},
+
+detectValidPlacement() {
+
+  this.curHoverX = this.newHoverX
+  this.curHoverY = this.newHoverY
+
+  //remove any highlight effect
+  stash.resetHighlightingPieceSquares();
+
+  //valid placement detection
+  this.clearTileHoverEffect();
+
+  let shiftX = 0
+  let shiftY = 0
+
+  let invalid = false
+
+
+
+let minSquare = objPressed.squares.reduce((min, square) => min.position.x < square.position.x || min.position.y < square.position.y ? min : game)
+
+let InterTiles = this.getIntersectingValidTiles(minSquare);
+
+//if no intersecting tiles
+if (InterTiles.length == 0) {this.clearTileHoverEffect();  return true;}
+//if off screen
+if (minSquare.position.x <= 0 - (tileSize/2) + centerOffsetX || minSquare.position.y <= 0 - (tileSize/2) || minSquare.position.x >= (tileSize * gridSize) - (tileSize/2) + centerOffsetX  || minSquare.position.y >= (tileSize * gridSize) - (tileSize/2)) {this.clearTileHoverEffect();  return true;}
+let minTile = InterTiles.reduce((min, iTile) => min.position.x < iTile.position.x || min.position.y < iTile.position.y || iTile.inUse == false ? min : game)
+
+if ((minSquare.position.x / tileSize) >= ((minTile.position.x + (tileSize / 2)) / tileSize) && (minSquare.position.y / tileSize) >= ((minTile.position.y + (tileSize / 2)) / tileSize)) {shiftX = 1; shiftY = 1;}
+if ((minSquare.position.x / tileSize) >= ((minTile.position.x + (tileSize / 2)) / tileSize)) {shiftX = 1}
+if ((minSquare.position.y / tileSize) >= ((minTile.position.y + (tileSize / 2)) / tileSize)) {shiftY = 1}
+
+minTile = InterTiles.find(iTile => {return iTile.gridPosition.x == minTile.gridPosition.x + shiftX && iTile.gridPosition.y == minTile.gridPosition.y + shiftY})
+
+if (minTile == null) {return}
+
+if (minTile.inUse == true) {return}
+
+minTile.isHovering = true
+currentHoveringTiles.push(minTile)
+
+
+newHoverX = minTile.gridPosition.x
+newHoverY = minTile.gridPosition.y
+// tile.colorAlpha = 0
+// tile.hColor = 'rgba(255,255,255,' + tile.colorAlpha + ')'
+
+//map rest of squares
+
+objPressed.squares.some(square => {if(square !== minSquare){
+
+let nTile = this.tiles.find(tile => {return tile.gridPosition.x == minTile.gridPosition.x + (square.x - minSquare.x) && tile.gridPosition.y == minTile.gridPosition.y + (square.y - minSquare.y)})
+
+if (nTile == null) {return true}
+
+if (nTile.inUse == true) {this.clearTileHoverEffect(); invalid = true; return true;} else {nTile.isHovering = true; currentHoveringTiles.push(nTile)}
+
+}})
+
+if (invalid == true) {this.clearTileHoverEffect(); return}
+
+
+
+let hoveringTiles = this.getCurrentHoveringTiles()
+
+if (hoveringTiles.length !== objPressed.squares.length) {this.clearTileHoverEffect(); return true;}
+
+this.detectClearTiles()
+
+
 
 }
+
+
+
+}
+
