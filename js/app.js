@@ -381,6 +381,7 @@ localStorage.setItem("progressStats", JSON.stringify({score: currentScore, combo
 
   function loadProgress() {
 
+    stash.GamePieces = [];
 
     //get load data
     tilesNew = JSON.parse(localStorage.getItem("progressTiles"))

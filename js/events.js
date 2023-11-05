@@ -77,8 +77,12 @@
 
       
     gameLoopStop = 1
-    tl.clear()
-    tl.kill()
+    try {
+      tl.clear()
+      tl.kill()
+    } catch (error) {
+    }
+
     saveProgress()
     
 
