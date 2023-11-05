@@ -1,4 +1,4 @@
- const cacheName = "Version 0.6";
+ const cacheName = "Version 0.6.2";
 
 
 
@@ -26,6 +26,7 @@ const appShellFiles = [
   "/index.html", 
   "/favicon.ico",
   "/css/style.css",
+  "/js/gsap.min.js",
   "/js/load.js", 
   "/js/app.js",
   "/js/obj/Tile.js",
@@ -34,7 +35,6 @@ const appShellFiles = [
   "/js/utils.js",
   "/js/board.js",
   "/js/stash.js",
-  "/js/jquery-3.6.0.min.js",
   "/js/fontawesome.js",
   "/icons/icon-72x72.png",
   "/icons/icon-96x96.png",
