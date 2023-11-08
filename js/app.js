@@ -292,7 +292,7 @@ function gameLoop() {
     if (innerHeight >= innerWidth * 1.5) {
       img.style.display = 'flex'
       emptySpace.style.height = innerHeight - CANVAS.height
-      emptySpace.height = innerHeight - CANVAS.height
+      emptySpace.height = innerHeight - CANVAS.height * ratio
       
     } else {
       img.style.display = 'none'

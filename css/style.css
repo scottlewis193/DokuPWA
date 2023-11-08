@@ -65,7 +65,7 @@
 
 *:focus {outline:none !important}
 
-.slider,
+/* .slider,
 button,
 textarea,
 select,
@@ -80,7 +80,7 @@ a{
  -ms-user-select: none;
   user-select: none; */
 
-}
+/* } */ 
 
 /* h1, h2 {
   margin: 0;
@@ -96,15 +96,6 @@ body {
   align-items: center;
 }
 
-img {
-  display: flex;
-  width: 50%;
-  height: auto;
-  border-radius: 5px;
-  align-self: center;
-  position: absolute;
-  left: 25%
-}
 
 a {
   text-align: center;
