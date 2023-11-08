@@ -192,13 +192,7 @@ input[type="text"] {
   user-select: none;
 }
 
-.animal {
-  display: flex; 
-  width: 12.5rem; 
-  height: auto; 
-  border-radius: 5px; 
-  align-self: center; 
-}
+
 
 /* .textinput {
   position: absolute;
@@ -318,9 +312,6 @@ input[type="radio"]:checked {
 
 #emptySpaceTop {
 grid-column: 1 / span 5;
-justify-self: center;
-height: 15em;
-display:flex;
 }
 
 #contentContainer {
