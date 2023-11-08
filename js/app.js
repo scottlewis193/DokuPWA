@@ -55,6 +55,15 @@ var fps, fpsInterval, startTime, now, then, elapsed;
 
 let deferredPrompt;
 
+//socket io setup
+// const http = require('http');
+// const { get } = require('https')
+// const server = http.createServer(app);
+// const { Server } = require('socket.io');
+
+// const io = new Server(server, {pingInterval: 2000,pingTimeout: 10000})
+
+
 //===============================================
 
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -276,6 +285,18 @@ function gameLoop() {
     //centerOffsetX = 0
     centerOffsetX = (innerWidth / 2) - (tileSize * (gridSize/2))
 
+    //set animal picture
+    const img = document.querySelector("img")
+    const emptySpace = document.querySelector("#emptySpaceTop")
+
+    if (innerHeight >= innerWidth * 2) {
+      img.style.display = 'flex'
+      
+    } else {
+      img.style.display = 'none'
+      emptySpace.style.height = 0
+    }
+
     //document.querySelector('#contentContainer').style.width = (tileSize*gridSize) + 'px';
 
   }
@@ -358,9 +379,9 @@ for (let i = 0; i < amount; i++) {
   }
 
   function checkProgress() {
-    //if(localStorage.getItem("progressTiles") === null || localStorage.getItem("progressTiles") == "") {load()} else {
+    if(localStorage.getItem("progressTiles") === null || localStorage.getItem("progressTiles") == "") {load()} else {
       openModal("gameInProgressModal")
-    //
+    }
   }
 
   function clearProgress() {

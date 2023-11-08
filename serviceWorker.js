@@ -45,6 +45,7 @@ const appShellFiles = [
   "/icons/icon-192x192.png",
   "/icons/icon-384x384.png",
   "/icons/icon-512x512.png",
+  "/img/CHAZ1.png",
   "/audio/combo2.mp3",
   "/audio/combo3.mp3",
   "/audio/combo4.mp3",

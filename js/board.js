@@ -195,8 +195,8 @@ minTile.isHovering = true
 currentHoveringTiles.push(minTile)
 
 
-newHoverX = minTile.gridPosition.x
-newHoverY = minTile.gridPosition.y
+this.newHoverX = minTile.gridPosition.x
+this.newHoverY = minTile.gridPosition.y
 // tile.colorAlpha = 0
 // tile.hColor = 'rgba(255,255,255,' + tile.colorAlpha + ')'
 
