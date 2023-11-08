@@ -96,14 +96,6 @@ body {
   align-items: center;
 }
 
-img.animal {
-  display: flex; 
-  width: 12.5rem; 
-  height: auto; 
-  border-radius: 5px; 
-  align-self: center; 
-}
-
 a {
   text-align: center;
 }
@@ -198,6 +190,14 @@ input[type="text"] {
   display:flex;
   width:100%;
   user-select: none;
+}
+
+.animal {
+  display: flex; 
+  width: 12.5rem; 
+  height: auto; 
+  border-radius: 5px; 
+  align-self: center; 
 }
 
 /* .textinput {
