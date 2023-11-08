@@ -11,14 +11,10 @@
 
 
 @font-face {
-  /* font-family: 'Varela Round';
-  src: url('varelaround-regular-webfont.woff2') format('woff2'),
-       url('varelaround-regular-webfont.woff') format('woff'); */
-       font-family: 'Major Mono Display';
-       src: url('MajorMonoDisplay-Regular.ttf') format('truetype');
+  font-family: 'Major Mono Display';
+  src: url('MajorMonoDisplay-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
-
 }
 
 :root {
