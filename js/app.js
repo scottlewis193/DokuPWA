@@ -289,8 +289,10 @@ function gameLoop() {
     const img = document.querySelector("img")
     const emptySpace = document.querySelector("#emptySpaceTop")
 
-    if (innerHeight >= innerWidth * 2) {
+    if (innerHeight >= innerWidth * 1.5) {
       img.style.display = 'flex'
+      emptySpace.style.height = innerHeight - CANVAS.height
+      emptySpace.height = innerHeight - CANVAS.height
       
     } else {
       img.style.display = 'none'

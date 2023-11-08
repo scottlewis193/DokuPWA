@@ -32,10 +32,10 @@ draw() {
     c.strokeStyle = 'black'
     c.lineWidth = 1
     c.beginPath()
-    c.moveTo(this.position.x+1,this.position.y)
-    c.lineTo(this.position.x+1+this.size.w,this.position.y)
-    c.moveTo(this.position.x+1,this.position.y)
-    c.lineTo(this.position.x+1,this.position.y+this.size.h)
+    c.moveTo(this.position.x+1,this.position.y+1)
+    c.lineTo(this.position.x+1+this.size.w,this.position.y+1)
+    c.moveTo(this.position.x+1,this.position.y+1)
+    c.lineTo(this.position.x+1,this.position.y+1+this.size.h)
     c.stroke()
     if(this.isHovering == true && this.isHighlighting == false) {
     c.fillStyle = this.hColor
