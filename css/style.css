@@ -97,10 +97,13 @@ body {
 }
 
 img {
-  width: min(50vw,50vh);
-  height: min(50vw,50vh);
+  display: flex;
+  width: 50%;
+  height: auto;
   border-radius: 5px;
   align-self: center;
+  position: absolute;
+  left: 25%
 }
 
 a {
