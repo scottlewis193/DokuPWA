@@ -1,4 +1,4 @@
- const cacheName = "Version 0.6.12";
+ const cacheName = "Version 0.6.13";
 
 
 
@@ -26,6 +26,7 @@ const appShellFiles = [
   "/index.html", 
   "/favicon.ico",
   "/css/style.css",
+  "/css/MajorMonoDisplay-Regular.ttf",
   "/js/jquery-3.6.0.min.js",
   "/js/load.js", 
   "/js/app.js",
@@ -46,6 +47,7 @@ const appShellFiles = [
   "/icons/icon-384x384.png",
   "/icons/icon-512x512.png",
   "/img/CHAZ1.png",
+  "/img/BING1.png",
   "/audio/combo2.mp3",
   "/audio/combo3.mp3",
   "/audio/combo4.mp3",

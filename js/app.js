@@ -88,7 +88,7 @@ const andref = document.referrer.includes('android-app://');
 
 if(isPwa()== true || andref == true) {console.log("PWA:true");} else 
 {console.log("PWA:false")
-if(window.location.href !== "http://127.0.0.1:8080/" && window.location.href !== "http://localhost:8080/" && window.location.href !== "http://192.168.0.3:8080/") {
+if(window.location.href !== "http://127.0.0.1:8080/" && window.location.href !== "http://localhost:8080/" && window.location.href !== "http://192.168.0.3:8080/" && window.location.href !== "http://192.168.0.10:8080/") {
   document.querySelector("#installModal").style.display = "block"
  }
 }
@@ -349,6 +349,11 @@ if (localStorage.getItem('bestScore') == null) {
     let currentstate = document.querySelector("#" + option + "option").checked
     localStorage.setItem(option,(currentstate == true) ? "enabled" : null)
     darkmode = (currentstate == true) ? "enabled" : null
+
+    const animalImg = document.querySelector(".animal")
+
+    animalImg.src = (darkmode) ?  'img/BING1.png' : 'img/CHAZ1.png'
+
     getOptions();
     saveProgress();
     loadProgress();

@@ -26,9 +26,7 @@
   <div id="contentContainer" >
 
     <!--CSS RULES AREN'T FOLLOWED IN PWA SO HAD TO PUT THESE RULES INLINE -->
-  <div id="emptySpaceTop" style="justify-self: center;
-  height: 12.5em;
-  display:flex;"><img class="animal" style="margin: 1rem " src="img/CHAZ1.png" alt="Guinea Pig"></div>
+  <div id="emptySpaceTop" style="justify-self: center; height: 12.5em; display:flex;"><img class="animal" style="margin: 1rem; border-radius: 5px; " src="img/CHAZ1.png" alt="Guinea Pig"></div>
    
   <div class="uiHContainer" id="exitHeaderContainer" style="grid-column: 1; grid-row: 2; align-self: end;">
     <a class="headerText" id="exitHeader"></a>
@@ -39,7 +37,7 @@
   </button>
 
    <div class="uiHContainer" id="scoreHeaderContainer" style="grid-column: 2;grid-row: 2; align-self: end;">
-    <a class="headerText" id="scoreHeader">Current Score</a>
+    <a class="headerText" id="scoreHeader">current score</a>
   </div>
     
    <div class="uiContainer" id="scoreContainer" style="grid-column:2; grid-row:3;">
@@ -47,15 +45,15 @@
     </div>
 
     <div class="uiHContainer" id="comboHeaderContainer" style="grid-column: 3;grid-row: 2;align-self: end;">
-      <a class="headerText" id="comboHeader">Combo</a>
+      <a class="headerText" id="comboHeader">combo</a>
     </div>
     
     <div class="uiContainer" id="comboContainer" style="grid-column:3; grid-row:3;">
-      <h2 class="" id ='currentCombo'>1X</h3>
+      <h2 class="" id ='currentCombo'>1x</h3>
     </div>
 
     <div class="uiHContainer" id="bestscoreHeaderContainer" style="grid-column: 4;grid-row: 2;align-self: end;">
-      <a class="headerText" id="bestscoreHeader">Best Score</a>
+      <a class="headerText" id="bestscoreHeader">best score</a>
     </div>
 
     <div class="uiContainer" id="bestscoreContainer" style="grid-column:4; grid-row:3;">
@@ -89,11 +87,11 @@
 <div id="mainMenuModal" class="modal">
   <div class="modal-content">
     <div class="modal-body">
-      <div class="mmLogo">DOKU</div>
-      <div style="grid-row:3" class="mmItem"><button class="menuBtn" id="quickStartBtn" onclick="checkProgress()">Quick Start</button></div>
-      <div style="grid-row:4" class="mmItem"><button class="menuBtn" id="multiplayerBtn" onclick="openModal('mpSelectionModal');closeModal('mainMenuModal')" >Multiplayer</button></div>
-      <div style="grid-row:5" class="mmItem"><button class="menuBtn" id="optionsBtn" onclick="openModal('optionsModal')">Options</button></div>
-      <div style="grid-row:6" class="mmItem"><button class="menuBtn" id="exitBtn" onclick="window.close()">Exit</button></div>
+      <div class="mmLogo">doku</div>
+      <div style="grid-row:3" class="mmItem"><button class="menuBtn" id="quickStartBtn" onclick="checkProgress()">quick start</button></div>
+      <div style="grid-row:4" class="mmItem"><button class="menuBtn" id="multiplayerBtn" onclick="openModal('mpSelectionModal');closeModal('mainMenuModal')" >multiplayer</button></div>
+      <div style="grid-row:5" class="mmItem"><button class="menuBtn" id="optionsBtn" onclick="openModal('optionsModal')">options</button></div>
+      <div style="grid-row:6" class="mmItem"><button class="menuBtn" id="exitBtn" onclick="window.close()">exit</button></div>
       <!-- <div id="creditHeader" style="grid-row:8;">Credits</div>
       <div style="grid-row:9; column-gap:20px; justify-self:center; text-align: center; font-size:min(2vw,2vh); display:grid; grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: auto auto;">
         <a id="creditTextHeader" style="grid-column:1; grid-row:1">Code</a><a id="creditText" style="grid-column:1; grid-row:2">Scott Lewis</a>
@@ -101,7 +99,7 @@
         <a id="creditTextHeader" style="grid-column:3; grid-row:1">Testing</a><a id="creditText" style="grid-column:3; grid-row:2">Rachel Mee<br>Scott Lewis</a>
         <a id="creditTextHeader" style="grid-column:4; grid-row:1">Champ</a><a id="creditText" style="grid-column:4; grid-row:2">Charlie Mee</a>
       </div> -->
-      <a class="copyrightText" style="grid-row:10; ">Copyright © 2022 Pixelhead Games</a>
+      <a class="copyrightText" style="grid-row:10; ">copyright © 2023 pixelhead games</a>
       
     </div>
 
@@ -110,17 +108,17 @@
 
 <div id="optionsModal" class="modal">
   <div class="modal-content">
-    <div class="close" onclick="closeModal('optionsModal')">X</div>
+    <div class="close" onclick="closeModal('optionsModal')">x</div>
     <div class="modal-body">
-      <div id="version" style="grid-column: 1 / span 2; grid-row: 1; justify-self: center; font-size: 0.9rem;">Version 0.1.12</div>
-      <div style="grid-column: 1; grid-row: 2; justify-self: center;">Sounds:</div>
+      <div id="version" style="grid-column: 1 / span 2; grid-row: 1; justify-self: center; font-size: 0.9rem;">version 0.1.12</div>
+      <div style="grid-column: 1; grid-row: 2; justify-self: center;">sounds:</div>
       <div style="grid-column: 2; grid-row: 2; justify-self: center;"><label class="switch"><input type="checkbox" id="soundsoption"><span class="slider"></span></label></div>
-      <div style="grid-column: 1; grid-row: 3; justify-self: center;">Dark Mode:</div>
+      <div style="grid-column: 1; grid-row: 3; justify-self: center;">dark mode:</div>
       <div style="grid-column: 2; grid-row: 3; justify-self: center;"><label class="switch"><input type="checkbox" id="darkmodeoption" onclick="toggleOption('darkmode')"><span class="slider"></span></label></div>
-      <div style="grid-column: 1; grid-row: 4; justify-self: center;">Tutorial:</div>
-      <div style="grid-column: 2; grid-row:4; justify-self: center;"><button class="optionBtn">Play</button></div>
-      <div style="grid-column: 1; grid-row: 5; justify-self: center;">App:</div>
-      <div style="grid-column: 2; grid-row:5; justify-self: center;"><button class="optionBtn">Reset</button></div>
+      <div style="grid-column: 1; grid-row: 4; justify-self: center;">tutorial:</div>
+      <div style="grid-column: 2; grid-row:4; justify-self: center;"><button class="optionBtn">play</button></div>
+      <div style="grid-column: 1; grid-row: 5; justify-self: center;">app:</div>
+      <div style="grid-column: 2; grid-row:5; justify-self: center;"><button class="optionBtn">reset</button></div>
 
 
     </div>
@@ -130,8 +128,8 @@
 <div id="updateModal" class="modal">
   <div class="modal-content">
     <div class="modal-body">
-      <p id="updateTxt">Update Available!</p>
-      <button id="updateBtn">Update Now</button>
+      <p id="updateTxt">update available!</p>
+      <button id="updateBtn"></button>update now</button>
     </div>
   </div>
 </div>
@@ -139,7 +137,7 @@
 <div id="installModal" class="modal">
   <div class="modal-content">
     <div class="modal-body">
-      <p id="installTxt" style="grid-column:2;grid-row:2;text-align: center;">This website works best as a PWA. <br>Click the button below to install</p>
+      <p id="installTxt" style="grid-column:2;grid-row:2;text-align: center;">this website works best as a pwa. <br>click the button below to install</p>
       <button id="installBtn" style="grid-column:2;grid-row:3">Install</button>
     </div>
   </div>
@@ -149,9 +147,9 @@
   <div class="modal-content">
     <div class="modal-body">
       <p id="gameOverTxt" style="font-size: 1.5rem;">Game Over</p>
-      <p id="finalScoreTxt">Final Score: 0</p>
-      <button id="restartBtn" onclick="load();closeModal('gameOverModal');">Play Again</button>
-      <button id="exitToMenuBtn" onclick="openModal('mainMenuModal');closeModal('gameOverModal');">Exit To Menu</button>
+      <p id="finalScoreTxt">final score: 0</p>
+      <button id="restartBtn" onclick="load();closeModal('gameOverModal');">play again</button>
+      <button id="exitToMenuBtn" onclick="openModal('mainMenuModal');closeModal('gameOverModal');">exit to menu</button>
     </div>
   </div>
 </div>
@@ -159,9 +157,9 @@
 <div id="gameInProgressModal" class="modal">
   <div class="modal-content">
     <div class="modal-body">
-      <p id="gameinProgressTxt" style="font-size: 1.5rem;">Game In Progress</p>
-      <button id="resumeBtn" onclick="load();closeModal('gameInProgressModal');">Resume</button>
-      <button id="newGameBtn" onclick="clearProgress();load();closeModal('gameInProgressModal');">Start New Game</button>
+      <p id="gameinProgressTxt" style="font-size: 1.5rem;">game in progress</p>
+      <button id="resumeBtn" onclick="load();closeModal('gameInProgressModal');">resume</button>
+      <button id="newGameBtn" onclick="clearProgress();load();closeModal('gameInProgressModal');">start new game</button>
     </div>
   </div>
 </div>

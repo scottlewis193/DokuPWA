@@ -11,9 +11,11 @@
 
 
 @font-face {
-  font-family: 'Varela Round';
+  /* font-family: 'Varela Round';
   src: url('varelaround-regular-webfont.woff2') format('woff2'),
-       url('varelaround-regular-webfont.woff') format('woff');
+       url('varelaround-regular-webfont.woff') format('woff'); */
+       font-family: 'Major Mono Display';
+       src: url('MajorMonoDisplay-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 
@@ -61,7 +63,7 @@
   box-sizing: border-box;
   overflow: hidden;
   /* user-select: none; */
-  font-family:'Varela Round', sans-serif;}
+  font-family:'Major Mono Display', sans-serif;}
 
 *:focus {outline:none !important}
 
@@ -329,7 +331,7 @@ grid-auto-rows:min-content;
 } */
 
 .headerText {
-  font-size: min(3.5vw,3.5vh);
+  font-size: min(2.25vw,2.25vh);
   text-align: center;
   color: var(--tileAltColor);
   align-self: center;
