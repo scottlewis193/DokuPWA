@@ -96,6 +96,13 @@ body {
   align-items: center;
 }
 
+img {
+  display: flex; 
+  width: 12.5rem; 
+  height: auto; 
+  border-radius: 5px; 
+  align-self: center; 
+}
 
 a {
   text-align: center;
@@ -312,9 +319,8 @@ input[type="radio"]:checked {
 #emptySpaceTop {
 grid-column: 1 / span 5;
 justify-self: center;
- display: flex;
- /* height: calc(100vh - 100vw - 50px - 33vw) */
-height: calc(50vw + 50px);
+height: 15em;
+display:flex;
 }
 
 #contentContainer {
