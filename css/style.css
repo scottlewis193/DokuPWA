@@ -96,7 +96,7 @@ body {
   align-items: center;
 }
 
-img {
+img.animal {
   display: flex; 
   width: 12.5rem; 
   height: auto; 
