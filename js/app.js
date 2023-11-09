@@ -392,6 +392,17 @@ for (let i = 0; i < amount; i++) {
   }
 
   function clearProgress() {
+    clearMemory()
+    clearStorage()
+  }
+
+  function clearMemory() {
+    board.tiles = [];
+    stash.GamePieces = [];
+    currentScore = 0;
+  }
+
+  function clearStorage() {
     localStorage.setItem("progressTiles", "")
     localStorage.setItem("progressStash", "")
     localStorage.setItem("progressStats", "")
@@ -455,7 +466,7 @@ localStorage.setItem("progressStats", JSON.stringify({score: currentScore, combo
 
 setScore(statsNew.score)
 currentCombo = statsNew.combo
-document.querySelector("#currentCombo").innerHTML = currentCombo + 'X';
+document.querySelector("#currentCombo").innerHTML = currentCombo + 'x';
 
 
 }
