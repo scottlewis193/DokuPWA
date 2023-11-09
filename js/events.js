@@ -64,7 +64,7 @@
 
     //trigger game over
     if (cantBePlacedCount == stash.GamePieces.length && stash.GamePieces.length !== 0){
-      document.querySelector("#finalScoreTxt").innerHTML = "Final Score: " + currentScore ;openModal("gameOverModal"); 
+      document.querySelector("#finalScoreTxt").innerHTML = "final score: " + currentScore ;openModal("gameOverModal"); 
       if(currentScore > bestScore){
         localStorage.setItem("bestScore",currentScore)}; 
         clearProgress()

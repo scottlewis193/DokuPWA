@@ -146,7 +146,7 @@
 <div id="gameOverModal" class="modal">
   <div class="modal-content">
     <div class="modal-body">
-      <p id="gameOverTxt" style="font-size: 1.5rem;">Game Over</p>
+      <p id="gameOverTxt" style="font-size: 1rem;">game over</p>
       <p id="finalScoreTxt">final score: 0</p>
       <button id="restartBtn" onclick="load();closeModal('gameOverModal');">play again</button>
       <button id="exitToMenuBtn" onclick="openModal('mainMenuModal');closeModal('gameOverModal');">exit to menu</button>
@@ -157,7 +157,7 @@
 <div id="gameInProgressModal" class="modal">
   <div class="modal-content">
     <div class="modal-body">
-      <p id="gameinProgressTxt" style="font-size: 1.5rem;">game in progress</p>
+      <p id="gameinProgressTxt" style="font-size: 1rem;">game in progress</p>
       <button id="resumeBtn" onclick="load();closeModal('gameInProgressModal');">resume</button>
       <button id="newGameBtn" onclick="clearProgress();load();closeModal('gameInProgressModal');">start new game</button>
     </div>
@@ -168,9 +168,9 @@
   <div class="modal-content">
     <div class="modal-body">
       <div class="mmLogo"></div>
-      <div class="mmItem"><button class="menuBtn" id="hostGameBtn" onclick="$('#mpSelectionModal').hide();$('#mpHostGameModal').show()"">Host Game</button></div>
-      <div class="mmItem"><button class="menuBtn" id="joinGameBtn" onclick="$('#mpSelectionModal').hide();$('#mpGameListModal').show()">Join Game</button></div>
-      <div class="mmItem"><button class="menuBtn" id="backtoMenuBtn" onclick="closeModal('mpSelectionModal');openModal('mainMenuModal')">Back</button></div>
+      <div class="mmItem"><button class="menuBtn" id="hostGameBtn" onclick="$('#mpSelectionModal').hide();$('#mpHostGameModal').show()"">host game</button></div>
+      <div class="mmItem"><button class="menuBtn" id="joinGameBtn" onclick="$('#mpSelectionModal').hide();$('#mpGameListModal').show()">join game</button></div>
+      <div class="mmItem"><button class="menuBtn" id="backtoMenuBtn" onclick="closeModal('mpSelectionModal');openModal('mainMenuModal')">back</button></div>
       
     </div>
 
@@ -182,61 +182,61 @@
     <div class="modal-body">
       <div class="mmItem"></div>
       <div class="mmItem">
-        <label class="textcontainer">Player Name:</label><br>
+        <label class="textcontainer">player name:</label><br>
           <input type="text" id="pname" name="pname"><br>
 
       </div>
       <div class="mmItem">
-        <label class="textcontainer">Server Name:</label><br>
+        <label class="textcontainer">server name:</label><br>
           <input type="text" id="sname" name="sname"><br>
  
       </div>
       <div class="mmItem">
-        <p>Game Type:</p>
+        <p>game type:</p>
 
         
         <label class="radiocontainer">
           <input type="radio" name="radioMode" value="Battle" checked>
-          Battle</input>
+          battle</input>
         </label>
         
         <label class="radiocontainer">
           <input type="radio" name="radioMode" value="Team Battle">
-          Team Battle</input>
+          team battle</input>
         </label>
         
         <label class="radiocontainer">
           <input type="radio" name="radioMode" value="Race">
-          Race</input>
+          race</input>
         </label>
     
       </div>
 
       <div class="mmItem">
-        <p>Game Options:</p>
+        <p>game options:</p>
         <label class="radiocontainer">
           <input type="radio" checked name="radioGO" value="Original">
-          Original</input>
+          original</input>
         </label>
         
         <label class="radiocontainer">
           <input type="radio" name="radioGO" value="Less Complex">
-          Less Complex</input>
+          less complex</input>
         </label>
         
         <label class="radiocontainer">
           <input type="radio" name="radioGO" value="Custom">
-          Custom</input>
+          custom</input>
         </label>
       </div>
 
 
       <div class="mmItem">
-        <button class="menuBtn" onclick="addServer();$('#mpHostGameModal').hide();$('#mpPreGameLobby').show()">Submit</button>
+        <button class="menuBtn" onclick="addServer();$('#mpHostGameModal').hide();$('#mpPreGameLobby').show()">submit</button>
       </div>
 
       <div class="mmItem">
-        <button class="menuBtn" onclick="$('#mpHostGameModal').hide();$('#mpSelectionModal').show()">Back</button>
+        <button class="menuBtn" onclick="$('#mpHostGameModal').hide();$('#mpSelectionModal').show()">back</button>
       </div>
    
       </div>
@@ -249,15 +249,15 @@
     <div class="modal-body">
       <div class="mmItem"></div>
       <div class="mmItem">
-        <label class="textcontainer">Players:</label><br>
+        <label class="textcontainer">players:</label><br>
         <label class="textcontainer" id="lobbyplayerlist"></label><br>
       </div>
       <div class="mmItem">
-        <label class="textcontainer">Waiting For Host To Start...</label><br>
+        <label class="textcontainer">waiting for host to start...</label><br>
       </div>
 
-      <div class="mmItem"><button class="menuBtn" id="StartBtn" onclick="">Start</button></div>
-      <div class="mmItem"><button class="menuBtn" id="backtoMenuBtn" onclick="playerServer.remove();closeModal('mpPreGameLobby');openModal('mainMenuModal')">Back</button></div>
+      <div class="mmItem"><button class="menuBtn" id="StartBtn" onclick="">start</button></div>
+      <div class="mmItem"><button class="menuBtn" id="backtoMenuBtn" onclick="playerServer.remove();closeModal('mpPreGameLobby');openModal('mainMenuModal')">back</button></div>
     </div>
   </div>
 </div>
@@ -289,9 +289,9 @@
           </table>
         </div>
    
-      <button id="joinGameBtn" style="grid-column: 1; grid-row: 3">Join Game</button>
-      <button id="refreshListBtn" style="grid-column: 2; grid-row: 3">Refresh List</button>
-      <button id="backtoMenuBtn" style="grid-column: 3; grid-row: 3" onclick="$('#mpGameListModal').hide();openModal('mpSelectionModal')">Back</button>
+      <button id="joinGameBtn" style="grid-column: 1; grid-row: 3">join game</button>
+      <button id="refreshListBtn" style="grid-column: 2; grid-row: 3">refresh list</button>
+      <button id="backtoMenuBtn" style="grid-column: 3; grid-row: 3" onclick="$('#mpGameListModal').hide();openModal('mpSelectionModal')">back</button>
       
     </div>
 
