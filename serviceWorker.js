@@ -1,4 +1,4 @@
- const cacheName = "Version 0.6.17";
+ const cacheName = "Version 0.6.19";
 
 
 
@@ -77,7 +77,7 @@ self.addEventListener('fetch', (e) => {
   e.respondWith((async () => {
     const r = await caches.match(e.request);
     console.log(`[Service Worker] Fetching resource: ${e.request.url}`);
-    if (r) return r;
+    // if (r) return r;
     const response = await fetch(e.request, {mode : 'cors'});
     const cache = await caches.open(cacheName);
     console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
