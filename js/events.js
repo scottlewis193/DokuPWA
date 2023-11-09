@@ -56,7 +56,7 @@
     stash.checkForAvailablePlacements();
     if (validClears == 0 && isValid == true) {currentCombo = 1;}
     playComboSound(currentCombo);
-    document.querySelector("#currentCombo").innerHTML = currentCombo + 'X';
+    document.querySelector("#currentCombo").innerHTML = currentCombo + 'x';
     }
 
     let cantBePlacedCount = 0
