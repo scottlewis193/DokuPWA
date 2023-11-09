@@ -1,4 +1,4 @@
- const cacheName = "Version 0.6.20";
+ const cacheName = "Version 0.7";
 
 
 

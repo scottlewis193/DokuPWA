@@ -328,7 +328,7 @@ grid-auto-rows:min-content;
 } */
 
 .headerText {
-  font-size: min(2.25vw,2.25vh);
+  font-size: min(3vw,3vh);
   text-align: center;
   color: var(--tileAltColor);
   align-self: center;
