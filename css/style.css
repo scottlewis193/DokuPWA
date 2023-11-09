@@ -92,6 +92,7 @@ body {
   height:100vh;
   justify-content: center;
   align-items: center;
+  font-family:'Major Mono Display', sans-serif;
 }
 
 a {
